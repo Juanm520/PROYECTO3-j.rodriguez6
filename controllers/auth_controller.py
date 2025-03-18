@@ -1,22 +1,26 @@
-from flask import Blueprint, render_template, request
-from flask_login import login_user
-from models.Usuarios import Usuario
+from flask import Blueprint, redirect, request, flash
+from flask_login import login_user, logout_user
+from models.Usuario_db import Usuario
 
-
-'''auth_blueprint = Blueprint('auth', __name__, url_prefix = '/login/auth')
-@auth_blueprint.route('/', method='POST')
+auth_blueprint = Blueprint('auth', __name__, url_prefix = '/login/auth')
+@auth_blueprint.route('/', methods=['POST'])
 def auth_controller():
-    usuario = request.args.get('user')
-    contrasena = request.args.get('password')
-    try:
-        user = Usuario.query.filter_by(usernmae = usuario, password = contrasena).first()
-        if user.password == contrasena:
-            login_user(user)
-            if user.is_admin:
-                return render_template('dashboard_admin.html')
-            else: 
-                return render_template('dashboard.html')
-        else:
-            return render_template('index.html', str = 'Contraseña incorrecta.')
-    except Exception:
-        return render_template('index.html', str = 'No existe usuario.')'''
+    '''Endpoint para autenticar usuario'''
+    usuario = request.form.get('user')
+    contrasena = request.form.get('password')
+    user = Usuario.query.filter_by(username=usuario).first()
+
+    if user and user.password == contrasena:
+        login_user(user)
+        return redirect('/login')
+    else:
+        flash('Contraseña o usuario incorrecto.', 'error')
+        return redirect('/login')
+
+logout_blueprint = Blueprint('logout', __name__, url_prefix = '/login/logout')
+@logout_blueprint.route('/', methods=['POST'])
+def logout_controller():
+    '''Endpoint para cerrar sesion'''
+    logout_user()
+    flash('Usuario deslogueado.', 'exito')
+    return redirect('/login')
