@@ -12,11 +12,11 @@ def heladeria_controller():
     ingredientes_query = Ingrediente.query.all()
     ingredientes_disponibles = []
     for ingrediente in ingredientes_query:
-            #Itera los ingredientes para las agregar a las instancias de Ingredientes.'''
-            if ingrediente.tipo_de_ingrediente == 'Base':
-                ingredientes_disponibles.append(Base(ingrediente.nombre, ingrediente.precio, ingrediente.calorias, ingrediente.unidades, ingrediente.es_vegetariano, ingrediente.sabor))
-            else:
-                ingredientes_disponibles.append(Complemento(ingrediente.nombre, ingrediente.precio, ingrediente.calorias, ingrediente.unidades, ingrediente.es_vegetariano))
+        #Itera los ingredientes para las agregar a las instancias de Ingredientes.'''
+        if ingrediente.tipo_de_ingrediente == 'Base':
+            ingredientes_disponibles.append(Base(ingrediente.nombre, ingrediente.precio, ingrediente.calorias, ingrediente.unidades, ingrediente.es_vegetariano, ingrediente.sabor))
+        else:
+            ingredientes_disponibles.append(Complemento(ingrediente.nombre, ingrediente.precio, ingrediente.calorias, ingrediente.unidades, ingrediente.es_vegetariano))
     #Llama los productos en la base de datos.
     productos_query = Producto.query.all()
     #Crea lista de las instancias productos
@@ -39,4 +39,3 @@ def heladeria_controller():
             productos_disponibles.append(Malteada(producto.nombre, producto.precio_publico, ingredientes_clase_producto, producto.volumen))
     #Iniciando la Heladeria
     return Heladeria('Sammy el Heladero', productos_disponibles, ingredientes_disponibles)
-    
