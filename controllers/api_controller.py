@@ -186,12 +186,11 @@ def ingrediente_renovar_controller():
     #Determina el tipo de producto, si no es complemento no ejecuta la renovacion.
     if ingrediente_db.tipo_de_ingrediente != 'Complemento':
         return jsonify({'error': 'No es posible renovar el ingrediente al ser una Base'}), 404
-    #intenta ejecutar el metodo si falla con error de atributo no contiene el metodo.
+    #Ejecutar el metodo si es una base.
     ingredientes_instancia = heladeria_controller().ingredientes
     ingrediente = list(filter(lambda ingrediente: ingrediente.nombre == ingrediente_db.nombre, ingredientes_instancia))
     #Ejecuta el metodo.
     ingrediente[0].renovar_inventario()
-    print(ingrediente[0].unidades, ingrediente[0].nombre)
     #Crea el retorno del endpoint.
     ingrediente_renovado = IngredienteSchema().dump(ingrediente_db)
     return jsonify(ingrediente_renovado)
