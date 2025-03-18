@@ -1,5 +1,5 @@
 from models.Base import Base
-'''from models.Ingredientes_db import Ingrediente'''
+from models.Ingredientes_db import Ingrediente
 
 class Heladeria():
     def __init__(self, nombre: str, productos: list):
@@ -36,8 +36,8 @@ class Heladeria():
                 else:
                     ingrediente.unidades -= 0.2
                  #Actualiza los cambios en la base de datos (Comentado para no implicar la base de datos en la prueba).
-                #Ingrediente.query.filter_by(nombre = ingrediente.nombre).update({"unidades": ingrediente.unidades})
-                #Ingrediente.commit()'''
+                Ingrediente.query.filter_by(nombre = ingrediente.nombre).update({"unidades": ingrediente.unidades})
+                Ingrediente.commit()
             #Suma a las ventas del dia
             self.__ventas_del_dia += producto_a_vender.precio_publico
             #Retorna que el producto se vendio

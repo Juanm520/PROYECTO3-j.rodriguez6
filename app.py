@@ -11,7 +11,7 @@ from crear_filas_iniciales import crear_filas
 app = Flask(__name__, template_folder='views')
 app.config.from_object(Config)
 app.config['SECRET_KEY'] = os.urandom(24)
-login_manager = LoginManager(app)
+#login_manager = LoginManager(app)
 db.init_app(app)
 ma.init_app(app)
 register_routes(app)

@@ -1,6 +1,7 @@
 from flask import Blueprint, request
-from models.Productos_db import Producto
+from models.Productos_db import Producto, ProductoSchema
 from models.Ingredientes_db import Ingrediente
+from controllers.heladeria_controller import heladeria_controller
 
 #API: ENDPOINTS
 productos_blueprint = Blueprint('productos', __name__, url_prefix = '/productos')
@@ -19,11 +20,13 @@ ingrediente_renovar_blueprint = Blueprint('ingrediente_renovar', __name__, url_p
 
 
 #Deficiones de los EndPoints:
-@productos_blueprint.route('/', method='GET')
+@productos_blueprint.route('/')
 def productos_controller():
-    pass
+    productos = Producto.query.all()
+    productos_schema = ProductoSchema()
+    return productos_schema.dump(productos, many = True)
 
-@producto_id_blueprint.route('/', method='GET')
+'''@producto_id_blueprint.route('/', method='GET')
 def producto_id_controller():
     producto_id = request.args.get('id')
     
@@ -67,3 +70,4 @@ def ingrediente_reabastecer_controller():
 def ingrediente_renovar_controller():
     ingrediente_id = request.args.get('id')
 
+'''

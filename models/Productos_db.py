@@ -13,7 +13,7 @@ class Producto(db.Model):
     tipo_vaso = db.Column(db.Text, nullable=True)
     volumen = db.Column(db.Integer, nullable=True)
 
-class BookSchema(ma.SQLAlchemyAutoSchema):
+class ProductoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Producto
         include_fk = True

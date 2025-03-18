@@ -1,4 +1,3 @@
-from flask import Blueprint, render_template
 from models.Heladeria import Heladeria
 from models.Productos_db import Producto
 from models.Ingredientes_db import Ingrediente
@@ -7,12 +6,8 @@ from models.Complemento import Complemento
 from models.Copa import Copa
 from models.Malteada import Malteada
 
-heladeria_blueprint = Blueprint('heladeria', __name__, url_prefix = '/heladeria')
-
-@heladeria_blueprint.route('/')
 def heladeria_controller():
     '''Controlador de la Heladeria'''
-
     #Llama los Ingredientes en la base de datos.
     ingredientes_query = Ingrediente.query.all()
     ingredientes_disponibles = []
@@ -44,23 +39,5 @@ def heladeria_controller():
             productos_disponibles.append(Malteada(producto.nombre, producto.precio_publico, ingredientes_clase_producto, producto.volumen))
 
     #Iniciando la Heladeria
-    heladeria = Heladeria('Sammy el Heladero', productos_disponibles)
-
-    #Ventas de comprobacion y para agregar saldo a las ventas diarias.
-    a_vender = [productos_disponibles[0], productos_disponibles[1], productos_disponibles[1], productos_disponibles[3]]
-    vendido = []
-    for producto in a_vender:
-        try:
-            vendido.append((producto.nombre, producto.precio_publico, heladeria.vender(producto.nombre)))
-        except ValueError as error:
-            vendido.append((producto.nombre, 0, error))
-
-    #A presentar en el frontend:
-    salida = {
-        'rentable': heladeria.producto_mas_rentable(),
-        'ventas': heladeria.ventas_del_dia,
-        'productos': heladeria.productos,
-        'vendido': vendido
-    }
+    return Heladeria('Sammy el Heladero', productos_disponibles)
     
-    return render_template('heladeria.html', salida = salida)
