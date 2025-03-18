@@ -2,9 +2,10 @@ from models.Base import Base
 from models.Ingredientes_db import Ingrediente
 
 class Heladeria():
-    def __init__(self, nombre: str, productos: list):
+    def __init__(self, nombre: str, productos: list, ingredientes: list):
         self.__nombre = nombre
         self.__productos = productos
+        self.__ingredientes = ingredientes
         self.__ventas_del_dia = 0.0
 
     def producto_mas_rentable(self) -> str:
@@ -13,7 +14,7 @@ class Heladeria():
         productos.sort(key= lambda x: x.calcular_rentabilidad(), reverse=True)
         return productos[0].nombre
 
-    def vender(self, nombre_producto: str) -> bool:
+    def vender(self, nombre_producto: str) -> str:
         '''Vende un producto'''
         producto_a_vender = dict
         #Verificar producto en productos
@@ -61,6 +62,14 @@ class Heladeria():
         if isinstance(nuevos_productos, list) and nuevos_productos != '' and len(nuevos_productos) == 4:
             self.__productos = nuevos_productos
     
+    @property
+    def ingredientes(self):
+        return self.__ingredientes
+    @ingredientes.setter
+    def ingredientes(self, nuevos_ingredientes: list) -> list:
+        if isinstance(nuevos_ingredientes, list):
+            self.__ingredientes = nuevos_ingredientes
+
     @property
     def ventas_del_dia(self):
         return self.__ventas_del_dia

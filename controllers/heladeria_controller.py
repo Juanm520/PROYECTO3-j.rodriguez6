@@ -37,7 +37,6 @@ def heladeria_controller():
             productos_disponibles.append(Copa(producto.nombre, producto.precio_publico, ingredientes_clase_producto, producto.tipo_vaso))
         else:
             productos_disponibles.append(Malteada(producto.nombre, producto.precio_publico, ingredientes_clase_producto, producto.volumen))
-
     #Iniciando la Heladeria
-    return Heladeria('Sammy el Heladero', productos_disponibles)
+    return Heladeria('Sammy el Heladero', productos_disponibles, ingredientes_disponibles)
     
