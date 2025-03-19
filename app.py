@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_login import LoginManager
 from config.config import Config
 from config.db import db
@@ -18,6 +18,10 @@ register_routes(app)
 def load_user(user: int):
     '''Carga el usuario en el login_manager'''
     return Usuario.query.get(user)
+
+@login_manager.unauthorized_handler
+def no_autenticado():
+    return jsonify({"error": 'No autorizado'}), 401
 
 with app.app_context():
     db.create_all()

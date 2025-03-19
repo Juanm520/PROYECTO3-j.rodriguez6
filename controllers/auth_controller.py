@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, request, flash
+from flask import Blueprint, redirect, request, flash, url_for
 from flask_login import login_user, logout_user
 from models.Usuario_db import Usuario
 
@@ -12,10 +12,10 @@ def auth_controller():
 
     if user and user.password == contrasena:
         login_user(user)
-        return redirect('/login')
+        return redirect(url_for('login.login_controller'))
     else:
         flash('Contraseña o usuario incorrecto.', 'error')
-        return redirect('/login')
+        return redirect(url_for('login.login_controller'))
 
 logout_blueprint = Blueprint('logout', __name__, url_prefix = '/login/logout')
 @logout_blueprint.route('/', methods=['POST'])
@@ -23,4 +23,4 @@ def logout_controller():
     '''Endpoint para cerrar sesion'''
     logout_user()
     flash('Usuario deslogueado.', 'exito')
-    return redirect('/login')
+    return redirect(url_for('login.login_controller'))

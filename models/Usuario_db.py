@@ -4,7 +4,7 @@ from config.db import db
 
 class Usuario(db.Model, UserMixin):
     '''Modelo db de Usuario'''
-    id = db.Column(db.Integer, primary_key = True, default = str(uuid.uuid4))
+    id = db.Column(db.Text, primary_key = True, default = lambda: str(uuid.uuid4()))
     username = db.Column(db.Text, unique = True, nullable = False)
     password = db.Column(db.Text, nullable = False)
     es_admin = db.Column(db.Boolean, nullable = True)

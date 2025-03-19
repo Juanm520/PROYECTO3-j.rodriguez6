@@ -4,6 +4,7 @@ from models.Complemento import Complemento
 from models.Base import Base
 from models.Copa import Copa
 from models.Malteada import Malteada
+from models.Usuario_db import Usuario
 
 def crear_filas(db):
     if db.session.query(Ingrediente).count() == 0:
@@ -61,9 +62,9 @@ def crear_filas(db):
             if isinstance(producto, Copa):
                 productos_a_agregar.append(Producto(nombre = producto.nombre, 
                             precio_publico = producto.precio_publico, 
-                            ingrediente1 = producto.ingredientes[0].nombre, 
-                            ingrediente2 = producto.ingredientes[1].nombre, 
-                            ingrediente3 = producto.ingredientes[2].nombre, 
+                            ingrediente1 = producto.ingredientes[0].nombre,
+                            ingrediente2 = producto.ingredientes[1].nombre,
+                            ingrediente3 = producto.ingredientes[2].nombre,
                             tipo_de_producto = 'Copa', 
                             tipo_vaso = producto.tipo_vaso
                             ))
@@ -76,8 +77,45 @@ def crear_filas(db):
                             tipo_de_producto = 'Malteada',
                             volumen = producto.volumen))
 
+        #usuarios
+        usuarios_a_agregar = []
+        usuarios_a_agregar.append(Usuario(username = 'admin',
+                                          password = 'admin1',
+                                          es_admin = True,
+                                          es_empleado = False))
+        usuarios_a_agregar.append(Usuario(username = 'empleado',
+                                          password = 'empleado1',
+                                          es_admin = False,
+                                          es_empleado = True))
+        usuarios_a_agregar.append(Usuario(username = 'cliente',
+                                          password = 'cliente1',
+                                          es_admin = False,
+                                          es_empleado = False))
+
         db.session.add_all(ingredientes_a_agregar)
         db.session.add_all(productos_a_agregar)
+        db.session.add_all(usuarios_a_agregar)
         db.session.commit()
     else:
          print('>>Datos iniciales ya agregados en la base de datos.')
+    
+    if db.session.query(Usuario).count() == 0:
+    #usuarios
+        usuarios_a_agregar = []
+        usuarios_a_agregar.append(Usuario(username = 'admin',
+                                          password = 'admin1',
+                                          es_admin = True,
+                                          es_empleado = False))
+        usuarios_a_agregar.append(Usuario(username = 'empleado',
+                                          password = 'empleado1',
+                                          es_admin = False,
+                                          es_empleado = True))
+        usuarios_a_agregar.append(Usuario(username = 'cliente',
+                                          password = 'cliente1',
+                                          es_admin = False,
+                                          es_empleado = False))
+
+        db.session.add_all(usuarios_a_agregar)
+        db.session.commit()
+    else:
+        print('>>Usuarios ya agregados en la base de datos.')
