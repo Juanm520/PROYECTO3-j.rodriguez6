@@ -1,7 +1,16 @@
-# 📌 API Endpoints
+# 🐧 API Sammy el Heladero
 
 Esta API permite gestionar productos e ingredientes, incluyendo su consulta, actualización y venta.
 
+## 🔐 Autorización
+
+Debe tener autorización para ingresar a algunos endpoints.
+    Usuarios disponibles para pruebas: 
+    `admin:admin1`
+    `empleado:empleado1`
+    `cliente:cliente1`
+
+# 📌 API Endpoints:
 ## 🍨🥤 Productos
 
 ### 🔹 Obtener todos los productos
